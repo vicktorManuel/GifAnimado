@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="format-detection" content="telephone=no" />
+        <meta name="msapplication-tap-highlight" content="no" />
+        <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+        <link rel="stylesheet" type="text/css" href="css/index.css" />
+        <link rel="stylesheet" href="js/libs/jquery/jquery.mobile-1.4.5.min.css">
+        <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+        <script src="js/libs/jquery/jquery.mobile-1.4.5.min.js"></script>
+    
+          <script src="js/libs/gifshot-master/build/gifshot.js"></script>
+        
+        <title>Gifs Animados</title>
+       
+    <script type="text/javascript" charset="utf-8">
+
+    var pictureSource;   // Origen de la imagen
+    var destinationType; // Formato del valor retornado
+    var foto1;
+    var foto2;
+    var foto3;
+    // Espera a que PhoneGap conecte con el dispositivo.
+    //
+    document.addEventListener("deviceready",onDeviceReady,false);
+
+    // PhoneGap esta listo para usarse!
+    //
+    function onDeviceReady() {
+        pictureSource=navigator.camera.PictureSourceType;
+        destinationType=navigator.camera.DestinationType;
+    }
+
+    // Llamada cuando la foto se retorna sin problemas
+    //
+    function onPhotoDataSuccess(imageData) {
+      var smallImage = document.getElementById('imgUno');
+      smallImage.style.display = 'block';
+      smallImage.src = "data:image/jpeg;base64," + imageData;
+        foto1="data:image/jpeg;base64," +imageData;
+    }
+
+       function onPhotoDataSuccessDos(imageData) {
+      var smallImage = document.getElementById('imgDos');
+      smallImage.style.display = 'block';
+      smallImage.src = "data:image/jpeg;base64," + imageData;
+        foto2="data:image/jpeg;base64," +imageData;
+    }
+       function onPhotoDataSuccessTres(imageData) {
+      var smallImage = document.getElementById('imgTres');
+      smallImage.style.display = 'block';
+      smallImage.src = "data:image/jpeg;base64," + imageData;
+        foto3="data:image/jpeg;base64," +imageData;
+    }
+    // Llamada cuando la foto se retorna sin problemas
+    //
+    function onPhotoURISuccessUno(imageURI) {
+        
+      var largeImage = document.getElementById('imgUno');
+      largeImage.style.display = 'block';
+      largeImage.src = imageURI;
+        foto1=imageURI;
+    }
+        
+        function onPhotoURISuccessDos(imageURI) {
+        
+      var largeImage = document.getElementById('imgDos');
+      largeImage.style.display = 'block';
+      largeImage.src = imageURI;
+            foto2=imageURI;
+    }
+        
+        function onPhotoURISuccessTres(imageURI) {
+        
+      var largeImage = document.getElementById('imgTres');
+      largeImage.style.display = 'block';
+      largeImage.src = imageURI;
+            foto3=imageURI;
+    }
+    
+    
+
+    // Un botón llamara a esta función
+    //
+    function capturePhoto(num) {
+      // Toma la imagen y la retorna como una string codificada en base64
+        if(num == 1) {
+      navigator.camera.getPicture(onPhotoDataSuccess, onFail, { quality: 50,
+                                                              destinationType: Camera.DestinationType.DATA_URL
+                                                              });
+        }else if(num==2 ){
+              navigator.camera.getPicture(onPhotoDataSuccessDos, onFail, { quality: 50,
+                                                              destinationType: Camera.DestinationType.DATA_URL
+                                                              });
+        }else if ( num==3) {
+              navigator.camera.getPicture(onPhotoDataSuccessTres, onFail, { quality: 50,
+                                                              destinationType: Camera.DestinationType.DATA_URL
+                                                              });
+        }
+    }
+
+    // Un botón llamara a esta función
+    //
+    function capturePhotoEdit() {
+      // Toma la imagen, permite editarla y la retorna como una string codificada en base64
+      navigator.camera.getPicture(onPhotoDataSuccess, onFail, { quality: 20, allowEdit: true }); 
+    }
+
+    // Un botón llamara a esta función
+    //
+    function getPhoto(source,numero) {
+      // Retorna la ruta del fichero de imagen desde el origen especificado
+        if(numero == 1) {
+            navigator.camera.getPicture(onPhotoURISuccessUno, onFail, { quality: 50, 
+                                                                    destinationType: destinationType.FILE_URI,
+                                                                    sourceType: source });
+        }else if (numero==2){
+          navigator.camera.getPicture(onPhotoURISuccessDos, onFail, { quality: 50, 
+                                                                    destinationType: destinationType.FILE_URI,
+                                                                    sourceType: source });
+        }
+        else if( numero==3){
+         navigator.camera.getPicture(onPhotoURISuccessTres, onFail, { quality: 50, 
+                                                                    destinationType: destinationType.FILE_URI,
+                                                                    sourceType: source });
+        }
+    }
+
+    // Llamado cuando algo malo ocurre
+    // 
+    function onFail(message) {
+      alert('Ocurrió un error: ' + message);
+    }
+        
+    function createGif(array) {
+    gifshot.createGIF({
+        images: array
+    }, function (obj) {
+        if (!obj.error) {
+                var image = obj.image;
+               var largeImage = document.getElementById('imgFinal');
+               largeImage.style.display = 'block';
+               largeImage.src = image; 
+        }
+    });           
+}
+        
+ function crearGif () {
+  
+    var array = [];
+   
+    array.push(foto1);
+    array.push(foto2);
+    array.push(foto3);
+    createGif(array);
+}
+
+    </script>
+       
+    </head>
+    <body>
+       
+        <div data-role="page" id="pageone">
+  <div data-role="panel" id="myPanel"> 
+    <h2>Crea tu gif animado</h2>
+    <p>Instrucciones: .</p>
+ 
+        </div>
+      <div data-role="header">
+    <h1>Gifs Animados webxsp</h1>
+  </div>
+
+  <div data-role="main" class="ui-content">
+    <p>Puedes compartir en tus redes sociales o guardar en tu telefono tus divertidos gifs animados.</p>
+    <a href="#myPanel" class="ui-btn ui-btn-inline ui-corner-all ui-shadow">Instrucciones</a>
+  </div>
+
+  <div data-role="footer">
+    <h1>Toma tus fotos:</h1>
+  
+    <!--  <button onclick="capturePhoto();">Capturar foto</button> <br>-->
+    <!--<button onclick="capturePhotoEdit();">Capturar foto editable</button> <br>-->
+      <h2>Primera foto</h2>
+    <button onclick="getPhoto(Camera.PictureSourceType.PHOTOLIBRARY,1);">Desde la librería de imágenes</button><br>
+    <button onclick="getPhoto(Camera.PictureSourceType.SAVEDPHOTOALBUM,1);">Desde el álbum de fotos</button><br>
+    <button onclick="capturePhoto(1);">Capturar foto</button>
+    
+    <h2>Segunda foto</h2><br>
+    <button onclick="getPhoto(Camera.PictureSourceType.PHOTOLIBRARY,2);">Desde la librería de imágenes</button><br>
+    <button onclick="getPhoto(Camera.PictureSourceType.SAVEDPHOTOALBUM,2);">Desde el álbum de fotos</button><br>
+    <button onclick="capturePhoto(2);">Capturar foto</button>
+    
+    <h2>Tercera foto</h2><br>
+    <button onclick="getPhoto(Camera.PictureSourceType.PHOTOLIBRARY,3);">Desde la librería de imágenes</button><br>
+    <button onclick="getPhoto(Camera.PictureSourceType.SAVEDPHOTOALBUM,3);">Desde el álbum de fotos</button><br>
+    <button onclick="capturePhoto(3);">Capturar foto</button>
+  <!--  <img style="display:none;width:60px;height:60px;" id="smallImage" src="" />-->
+    
+    <img style="display:none;width:120px;height:120px;" id="imgUno" src="" /> <br>
+    <img style="display:none;width:120px;height:120px;" id="imgDos" src="" /> <br>
+    <img style="display:none;width:120px;height:120px;" id="imgTres" src="" /> <br>
+      
+    <br>
+    <br>
+    <h1>Formar gif animado</h1>
+      <button onclick="crearGif();">Crear Gif</button>
+      <img style="display:none;width:120px;height:120px;" id="imgFinal" src="" /> <br>
+      
+  </div> 
+    </div> 
+        
+        <script type="text/javascript" src="cordova.js"></script>
+        <script type="text/javascript" src="js/index.js"></script>
+        
+        <script type="text/javascript">
+            app.initialize();
+        </script>
+    </body>
+</html>
