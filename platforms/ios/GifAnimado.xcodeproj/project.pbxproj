@@ -44,6 +44,7 @@
 		68180F5F4DAE4F9F89ADE223 /* CDVJpegHeaderWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 15BF641F41984D8F99F381DB /* CDVJpegHeaderWriter.m */; };
 		B19D8BA5CD9F4777BA8ED3A7 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55AC5ABB558A4659B578F319 /* ImageIO.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		3EDCEE9E547744C6A0535560 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1601C1107EDC4AF7AD98346A /* CoreLocation.framework */; };
+		967118C06EFC4E56BB5BAB4A /* Canvas2ImagePlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = E919575D259E4F2F9482B58F /* Canvas2ImagePlugin.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -118,6 +119,8 @@
 		640F6DDD8CE04DACA58A105C /* CDVExif.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "CDVExif.h"; path = "org.apache.cordova.camera/CDVExif.h"; sourceTree = "<group>"; fileEncoding = 4; };
 		55AC5ABB558A4659B578F319 /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = "ImageIO.framework"; path = "System/Library/Frameworks/ImageIO.framework"; sourceTree = SDKROOT; fileEncoding = 4; };
 		1601C1107EDC4AF7AD98346A /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = "CoreLocation.framework"; path = "System/Library/Frameworks/CoreLocation.framework"; sourceTree = SDKROOT; fileEncoding = 4; };
+		E919575D259E4F2F9482B58F /* Canvas2ImagePlugin.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "Canvas2ImagePlugin.m"; path = "org.devgeeks.Canvas2ImagePlugin/Canvas2ImagePlugin.m"; sourceTree = "<group>"; fileEncoding = 4; };
+		1F9DF232B4AD4BC78C67ED9F /* Canvas2ImagePlugin.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "Canvas2ImagePlugin.h"; path = "org.devgeeks.Canvas2ImagePlugin/Canvas2ImagePlugin.h"; sourceTree = "<group>"; fileEncoding = 4; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -227,6 +230,8 @@
 				BB7D149A948941C5B5DB3C9B /* CDVCamera.h */,
 				12BCC3265A244A19849AE130 /* CDVJpegHeaderWriter.h */,
 				640F6DDD8CE04DACA58A105C /* CDVExif.h */,
+				E919575D259E4F2F9482B58F /* Canvas2ImagePlugin.m */,
+				1F9DF232B4AD4BC78C67ED9F /* Canvas2ImagePlugin.h */,
 			);
 			name = Plugins;
 			path = "GifAnimado/Plugins";
@@ -414,6 +419,7 @@
 				C274F6FFC72F4D2BAC73E1E0 /* UIImage+CropScaleOrientation.m in Sources */,
 				8B2BA4BFC91C4A77B8C1FE20 /* CDVCamera.m in Sources */,
 				68180F5F4DAE4F9F89ADE223 /* CDVJpegHeaderWriter.m in Sources */,
+				967118C06EFC4E56BB5BAB4A /* Canvas2ImagePlugin.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

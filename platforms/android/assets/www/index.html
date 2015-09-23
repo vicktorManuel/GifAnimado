@@ -11,18 +11,21 @@
         <link rel="stylesheet" href="js/libs/jquery/jquery.mobile-1.4.5.min.css">
         <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
         <script src="js/libs/jquery/jquery.mobile-1.4.5.min.js"></script>
-    
-          <script src="js/libs/gifshot-master/build/gifshot.js"></script>
+        <script src="js/Canvas2ImagePlugin.js"></script>
+        <script src="js/libs/gifshot-master/build/gifshot.js"></script>
         
         <title>Gifs Animados</title>
        
-    <script type="text/javascript" charset="utf-8">
-
+    <script type="text/javascript" charset="utf-8"> 
+        
     var pictureSource;   // Origen de la imagen
     var destinationType; // Formato del valor retornado
     var foto1;
     var foto2;
     var foto3;
+    var imgGif;
+    var canvas2ImagePlugin;
+   
     // Espera a que PhoneGap conecte con el dispositivo.
     //
     document.addEventListener("deviceready",onDeviceReady,false);
@@ -30,50 +33,51 @@
     // PhoneGap esta listo para usarse!
     //
     function onDeviceReady() {
+        
         pictureSource=navigator.camera.PictureSourceType;
         destinationType=navigator.camera.DestinationType;
+        canvas2ImagePlugin = window.plugins.canvas2ImagePlugin;
+        //Creando directorio          
     }
 
     // Llamada cuando la foto se retorna sin problemas
     //
     function onPhotoDataSuccess(imageData) {
       var smallImage = document.getElementById('imgUno');
-      smallImage.style.display = 'block';
-      smallImage.src = "data:image/jpeg;base64," + imageData;
-        foto1="data:image/jpeg;base64," +imageData;
+          smallImage.style.display = 'block';
+          smallImage.src = "data:image/jpeg;base64," + imageData;
+          foto1="data:image/jpeg;base64," +imageData;
     }
 
-       function onPhotoDataSuccessDos(imageData) {
+    function onPhotoDataSuccessDos(imageData) {
       var smallImage = document.getElementById('imgDos');
-      smallImage.style.display = 'block';
-      smallImage.src = "data:image/jpeg;base64," + imageData;
-        foto2="data:image/jpeg;base64," +imageData;
+          smallImage.style.display = 'block';
+          smallImage.src = "data:image/jpeg;base64," + imageData;
+          foto2="data:image/jpeg;base64," +imageData;
     }
-       function onPhotoDataSuccessTres(imageData) {
+    function onPhotoDataSuccessTres(imageData) {
       var smallImage = document.getElementById('imgTres');
-      smallImage.style.display = 'block';
-      smallImage.src = "data:image/jpeg;base64," + imageData;
-        foto3="data:image/jpeg;base64," +imageData;
+          smallImage.style.display = 'block';
+          smallImage.src = "data:image/jpeg;base64," + imageData;
+          foto3="data:image/jpeg;base64," +imageData;
     }
     // Llamada cuando la foto se retorna sin problemas
     //
     function onPhotoURISuccessUno(imageURI) {
-        
       var largeImage = document.getElementById('imgUno');
-      largeImage.style.display = 'block';
-      largeImage.src = imageURI;
-        foto1=imageURI;
+          largeImage.style.display = 'block';
+          largeImage.src = imageURI;
+          foto1=imageURI;
     }
         
-        function onPhotoURISuccessDos(imageURI) {
-        
+     function onPhotoURISuccessDos(imageURI) {   
       var largeImage = document.getElementById('imgDos');
       largeImage.style.display = 'block';
       largeImage.src = imageURI;
             foto2=imageURI;
-    }
+     }
         
-        function onPhotoURISuccessTres(imageURI) {
+     function onPhotoURISuccessTres(imageURI) {
         
       var largeImage = document.getElementById('imgTres');
       largeImage.style.display = 'block';
@@ -88,7 +92,7 @@
     function capturePhoto(num) {
       // Toma la imagen y la retorna como una string codificada en base64
         if(num == 1) {
-      navigator.camera.getPicture(onPhotoDataSuccess, onFail, { quality: 50,
+              navigator.camera.getPicture(onPhotoDataSuccess, onFail, { quality: 50,
                                                               destinationType: Camera.DestinationType.DATA_URL
                                                               });
         }else if(num==2 ){
@@ -111,7 +115,7 @@
 
     // Un botón llamara a esta función
     //
-    function getPhoto(source,numero) {
+function getPhoto(source,numero) {
       // Retorna la ruta del fichero de imagen desde el origen especificado
         if(numero == 1) {
             navigator.camera.getPicture(onPhotoURISuccessUno, onFail, { quality: 50, 
@@ -127,15 +131,15 @@
                                                                     destinationType: destinationType.FILE_URI,
                                                                     sourceType: source });
         }
-    }
+}
 
     // Llamado cuando algo malo ocurre
     // 
-    function onFail(message) {
-      alert('Ocurrió un error: ' + message);
-    }
+function onFail(message) {
+    alert('Ocurrió un error: ' + message);
+}
         
-    function createGif(array) {
+function createGif(array) {
     gifshot.createGIF({
         images: array
     }, function (obj) {
@@ -143,22 +147,38 @@
                 var image = obj.image;
                var largeImage = document.getElementById('imgFinal');
                largeImage.style.display = 'block';
-               largeImage.src = image; 
+               largeImage.src = image;  
+               imgGif= largeImage.src;
+            //alert(largeImage.src+" resultado");
+               dibujaCanvas();
         }
-    });           
+    });   
+      
+}
+function dibujaCanvas(){
+    
+    var canvas = document.getElementById('probandoCanvas');
+    var context = canvas.getContext('2d');
+    var imagenCanvas= new Image();
+     imagenCanvas.onload = function() {
+          context.drawImage(this, 0, 0);
+        };
+    imagenCanvas.src=imgGif;
+    
 }
         
- function crearGif () {
-  
+function crearGif () {
     var array = [];
-   
     array.push(foto1);
     array.push(foto2);
     array.push(foto3);
     createGif(array);
 }
-
-    </script>
+       
+function guardar() {
+ canvas2ImagePlugin.saveImageDataToLibrary(function(msg){console.log(msg);},function(err){console.log(err);},'probandoCanvas'); 
+}
+</script>
        
     </head>
     <body>
@@ -180,9 +200,6 @@
 
   <div data-role="footer">
     <h1>Toma tus fotos:</h1>
-  
-    <!--  <button onclick="capturePhoto();">Capturar foto</button> <br>-->
-    <!--<button onclick="capturePhotoEdit();">Capturar foto editable</button> <br>-->
       <h2>Primera foto</h2>
     <button onclick="getPhoto(Camera.PictureSourceType.PHOTOLIBRARY,1);">Desde la librería de imágenes</button><br>
     <button onclick="getPhoto(Camera.PictureSourceType.SAVEDPHOTOALBUM,1);">Desde el álbum de fotos</button><br>
@@ -208,6 +225,8 @@
     <h1>Formar gif animado</h1>
       <button onclick="crearGif();">Crear Gif</button>
       <img style="display:none;width:120px;height:120px;" id="imgFinal" src="" /> <br>
+      <canvas id="probandoCanvas" width="400" height="400"></canvas>
+      <button onclick="guardar();">Guardar</button>
       
   </div> 
     </div> 
